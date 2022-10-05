@@ -1,0 +1,7 @@
+﻿Images courtesy of: https://www.kindpng.com/downpng/iimbxmh_atlas-png-flappy-bird-transparent-png/
+- "kindpng_1842511.png" was chopped into the parts using MSPaint.
+- The chevron edges had to be adjusted, as did the Flappy bird frames.
+- The top image main sky area is constant and painted reducing the required top section image.
+- The bottom image was also cropped because we a want moving chevron but not the light brown bottom region painted every frame, 
+
+But all credit to the original author for facilitating something that makes the Flappy simulator look not too shabby.
