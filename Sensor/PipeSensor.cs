@@ -62,7 +62,7 @@ internal class PipeSensor
         for (int LIDARangleIndex = 0; LIDARangleIndex < s_samplePoints; LIDARangleIndex++)
         {
             //     -45  0  45
-            //  -90 _ \ | / _ 90   <-- relative to direction of car, hence + angle car is pointing
+            //  -90 _ \ | / _ 90   <-- relative to flappy
             double LIDARangleToCheckInRadiansMin = MathUtils.DegreesInRadians(sensorAngleToCheckInDegrees);
 
             PointF pointSensor = new((float)(Math.Cos(LIDARangleToCheckInRadiansMin) * DepthOfVisionInPixels + flappyLocation.X),

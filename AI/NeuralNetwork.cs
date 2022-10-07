@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using FlappyBirdAI.AI;
 
 namespace FlappyBird;
 
@@ -287,7 +288,26 @@ public class NeuralNetwork
             foreach (string key in dictionaryEntriesWeShouldRemove) values.Remove(key);
         }
 
-        string result = ($"double[] arrayd = d.ToArray();\ndouble[] outputFromNeuralNetwork = {values[(Layers.Length - 1).ToString() + "-0"]};\n\n").Replace("+-", "-");
+        string result = "private void UseFormulaToMoveFlappy()\n"+
+                        "{\n"+
+                        "   List<Rectangle> rectanglesIndicatingWherePipesWerePresent = ScrollingScenery.GetClosestPipes(this, 300);\n"+
+                        "   // sensors around Flappy detect a pipe\n" +
+                        "   sensor.Read(rectanglesIndicatingWherePipesWerePresent, new PointF(HorizontalPositionOfFlappyPX + 14, VerticalPositionOfFlappyPX), out double[] proximitySensorRegionsOutput);\n" +
+                        "\n"+
+                        "   // we supplement with existing speed and acceleration\n" +
+                        "   List<double> arrayd = new(proximitySensorRegionsOutput)\n" +
+                        "   {\n" +
+                        "      verticalSpeed / 3,\n" +
+                        "      verticalAcceleration / 3\n" +
+                        "    };\n" +
+                        ($"    double outputFromNeuralNetwork = {values[(Layers.Length - 1).ToString() + "-0"]};\n\n").Replace("+-", "-")+ "\n"+
+                        "\n" +
+                        "    // neural network provides thrust/wing flapping to give acceleration up or down.\n" +
+                        "    verticalAcceleration += (float)outputFromNeuralNetwork;\n" +
+                        "\n"+
+                        "    // if enabled, we track telemetry and write it for birds that complete the course.\n" +
+                        "    telemetry.Record(arrayd, outputFromNeuralNetwork, rectanglesIndicatingWherePipesWerePresent);\n"+
+                        "}";
 
         return result;
     }

@@ -12,6 +12,7 @@ namespace FlappyBird;
 /// </summary>
 public partial class Form1 : Form
 {
+    #region CONSTANTS
     /// <summary>
     /// How many AI Flappy birds on screen at the same time
     /// </summary>
@@ -20,12 +21,15 @@ public partial class Form1 : Form
     /// <summary>
     /// true - it saves a screenshot of the failure (even in quiet mode) to d:\temp\
     /// </summary>
-    private bool TakeSnapShotWhenFinalFlappyGoesSplat = false;
+    private const bool c_takeSnapShotWhenFinalFlappyGoesSplat = false;
+    #endregion
 
+    #region STATIC VARIABLES
     /// <summary>
     /// When in silent mode it learns at maximum speed (as it doesn't need to paint the UI).
     /// </summary>
     private static bool s_silentMode = false;
+    #endregion
 
     /// <summary>
     /// Each AI bird is a new "Flappy", this tracks them.
@@ -169,7 +173,7 @@ public partial class Form1 : Form
     /// </summary>
     private void TakeAScreenshotOfFailure()
     {
-        if (!TakeSnapShotWhenFinalFlappyGoesSplat) return; // turned off
+        if (!c_takeSnapShotWhenFinalFlappyGoesSplat) return; // turned off
 
         if (numberOfTimesFlappyFinishedGame == 0) return; // don't do it in early learning
 
@@ -282,7 +286,6 @@ public partial class Form1 : Form
     {
         using Pen highlightPen = new(Color.FromArgb(80, 255, 255, 255));
         using Pen shadowPen = new(Color.FromArgb(130, 0, 0, 0));
-
         using Font fontBig = new("Arial", 9);
              
         graphics.DrawString("Course Completion Progress", fontBig, Brushes.Black, new Point(6, 12));

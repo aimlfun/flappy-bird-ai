@@ -14,7 +14,7 @@ namespace FlappyBirdAI.AI
         /// true - writes telemetry of Flappy to a .csv if they complete the entire course.
         /// false - any calls to record are ignored (as is the write operation).
         /// </summary>
-        private bool c_recordTelemetry = false; // not made readonly. If I do that, it moans at all the conditional code.
+        private readonly bool c_recordTelemetry = false; // not made readonly. If I do that, it moans at all the conditional code.
 
         /// <summary>
         /// Tracks telemetry as strings to write to a file. We cache to avoid writing ones we later discard.
@@ -83,7 +83,7 @@ namespace FlappyBirdAI.AI
             // add the proximity sensors 
             for (int i = 0; i < d.Count - 2; i++)
             {
-                serialisedData += $"{i},";
+                serialisedData += $"{d[i]},";
             }
 
             // these are divided by 3 to keep -1..1 range for neural network, so we reverse that here
