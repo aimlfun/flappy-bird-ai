@@ -35,7 +35,7 @@ internal class PipeSensor
     internal static double s_sensorVisionAngleInDegrees = 0;
 
     /// <summary>
-    /// 
+    /// Detects pipes using a sensor.
     /// </summary>
     /// <param name="flappyLocation"></param>
     /// <param name="heatSensorRegionsOutput"></param>
@@ -117,7 +117,7 @@ internal class PipeSensor
     /// <summary>
     /// Detect intersection between line to sensor limit and the pipe returning "intersection" where they meet.
     /// </summary>
-    /// <param name="predatorLocation"></param>
+    /// <param name="flappyLocation"></param>
     /// <param name="heatSensorRegionsOutput"></param>
     /// <param name="DepthOfVisionInPixels"></param>
     /// <param name="LIDARangleIndex"></param>
@@ -125,7 +125,15 @@ internal class PipeSensor
     /// <param name="intersection"></param>
     /// <param name="pointPipeLine1"></param>
     /// <param name="pointPipeLine2"></param>
-    private static void FindIntersectionWithPipe(PointF predatorLocation, double[] heatSensorRegionsOutput, double DepthOfVisionInPixels, int LIDARangleIndex, PointF pointSensorLimit, ref PointF intersection, Point pointPipeLine1, Point pointPipeLine2)
+    private static void FindIntersectionWithPipe(
+        PointF flappyLocation,
+        double[] heatSensorRegionsOutput,
+        double DepthOfVisionInPixels,
+        int LIDARangleIndex,
+        PointF pointSensorLimit,
+        ref PointF intersection,
+        Point pointPipeLine1,
+        Point pointPipeLine2)
     {
         /* _______________________
          *       .   |  |   |  |           |  |
@@ -139,9 +147,9 @@ internal class PipeSensor
          *    .      |  |   |  |   
          *  __.______|__|___|__|__
          */
-        if (MathUtils.GetLineIntersection(predatorLocation, pointSensorLimit, pointPipeLine1, pointPipeLine2, out PointF intersectionLeftSide))
+        if (MathUtils.GetLineIntersection(flappyLocation, pointSensorLimit, pointPipeLine1, pointPipeLine2, out PointF intersectionLeftSide))
         {
-            double mult = MathUtils.DistanceBetweenTwoPoints(predatorLocation, intersectionLeftSide).Clamp(0F, (float)DepthOfVisionInPixels) / DepthOfVisionInPixels;
+            double mult = MathUtils.DistanceBetweenTwoPoints(flappyLocation, intersectionLeftSide).Clamp(0F, (float)DepthOfVisionInPixels) / DepthOfVisionInPixels;
 
             // this "surface" intersects closer than prior ones at the same angle?
             if (mult < heatSensorRegionsOutput[LIDARangleIndex])
